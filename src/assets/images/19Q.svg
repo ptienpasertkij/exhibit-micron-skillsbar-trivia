@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1924 924">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-linejoin: round;
+        stroke-width: 10px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: Poppins-Regular, Poppins;
+        font-size: 72px;
+      }
+    </style>
+  </defs>
+  <g id="Export_Q" data-name="Export Q">
+    <rect width="1924" height="924"/>
+    <text class="cls-2" transform="translate(103.76 176.68)"><tspan x="0" y="0">How many squares are there?</tspan></text>
+    <rect class="cls-1" x="1317" y="55" width="70" height="70"/>
+    <rect class="cls-1" x="1387" y="55" width="70" height="70"/>
+    <rect class="cls-1" x="1457" y="55" width="70" height="70"/>
+    <rect class="cls-1" x="1317" y="123" width="70" height="70"/>
+    <rect class="cls-1" x="1387" y="123" width="70" height="70"/>
+    <rect class="cls-1" x="1457" y="123" width="70" height="70"/>
+    <rect class="cls-1" x="1317" y="191" width="70" height="70"/>
+    <rect class="cls-1" x="1387" y="191" width="70" height="70"/>
+    <rect class="cls-1" x="1457" y="191" width="70" height="70"/>
+  </g>
+</svg>

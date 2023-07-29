@@ -1,0 +1,39 @@
+.answer {
+  max-height: 100px;
+  flex-grow: 1;
+  /* for small screens make max-height 50px */
+}
+
+@media screen and (max-width: 600px) {
+  .answer {
+    max-height: 50px;
+  }
+}
+
+.answerBox {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.answerBox::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+  z-index: 1;
+}
+
+.answerBox.gradientBorder::before {
+  background: linear-gradient(to right, #10a5d3, #87b764, #fbc150, #e7398a, #5b469c);
+}
+
+.answerBox.correctAnswer::before {
+  background: #87b764;
+}
+
+.answerBox.wrongAnswer::before {
+  background: #ed3d50;
+}

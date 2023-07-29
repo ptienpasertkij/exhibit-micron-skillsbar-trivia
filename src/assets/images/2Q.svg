@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1924 924">
+  <defs>
+    <style>
+      .cls-1 {
+        text-decoration: underline;
+      }
+
+      .cls-1, .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        fill: #fff;
+        font-family: Poppins-Regular, Poppins;
+        font-size: 72px;
+      }
+    </style>
+  </defs>
+  <g id="Export_Q" data-name="Export Q">
+    <rect width="1924" height="924"/>
+    <text class="cls-3" transform="translate(103.76 170.68)"><tspan x="0" y="0">Rank the objects from </tspan><tspan class="cls-1" x="804.95" y="0">smallest</tspan><tspan class="cls-2" x="1109.22" y="0" xml:space="preserve"> to largest:</tspan></text>
+  </g>
+</svg>

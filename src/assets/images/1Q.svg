@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1924 924">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #fff;
+        stroke-linejoin: round;
+        stroke-width: 10px;
+      }
+
+      .cls-2 {
+        font-family: Poppins-Regular, Poppins;
+        font-size: 72px;
+      }
+    </style>
+  </defs>
+  <g id="Export_Q" data-name="Export Q">
+    <rect width="1924" height="924"/>
+    <text class="cls-2" transform="translate(107.76 170.68)"><tspan x="0" y="0">Which shape comes next?</tspan></text>
+    <polygon class="cls-3" points="1166.57 86.1 1183.29 119.97 1220.67 125.41 1193.62 151.77 1200.01 189 1166.57 171.42 1133.14 189 1139.53 151.77 1112.48 125.41 1149.86 119.97 1166.57 86.1"/>
+    <circle class="cls-1" cx="1309.5" cy="137.5" r="56.5"/>
+    <polygon class="cls-3" points="1456.57 86.1 1473.29 119.97 1510.67 125.41 1483.62 151.77 1490.01 189 1456.57 171.42 1423.14 189 1429.53 151.77 1402.48 125.41 1439.86 119.97 1456.57 86.1"/>
+    <circle class="cls-1" cx="1599.5" cy="137.5" r="56.5"/>
+    <line class="cls-3" x1="1698.97" y1="194" x2="1833.24" y2="194"/>
+  </g>
+</svg>
