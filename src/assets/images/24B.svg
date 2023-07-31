@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.83 87.46">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: none;
-        stroke: #fff;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        stroke-width: 10px;
-      }
-    </style>
-  </defs>
-  <g id="Options">
-    <path class="cls-1" d="m5,12.38v8.97c0,4.08,3.3,7.38,7.38,7.38h93.64c2.43,0,4.7,1.19,6.08,3.19l25.07,36.34c6.13,8.89,16.25,14.2,27.05,14.2h53.63c10.19,0,19.79-4.8,25.9-12.96l10.92-14.58c9.19-12.28,14.16-27.2,14.16-42.54h0c0-4.08-3.3-7.38-7.38-7.38H12.38c-4.08,0-7.38,3.3-7.38,7.38Z"/>
-  </g>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.12 137.79"><defs><style>.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:10px;}</style></defs><g id="Options"><path class="cls-1" d="m7.49,10.53l-2.25,8.68c-1.02,3.95,1.35,7.97,5.29,9l90.65,23.49c2.35.61,4.25,2.33,5.08,4.61l15.15,41.46c3.71,10.15,12.17,17.82,22.63,20.53l51.91,13.45c9.87,2.56,20.36.31,28.32-6.05l14.23-11.38c11.98-9.58,20.53-22.78,24.38-37.63h0c1.02-3.95-1.35-7.97-5.29-9L16.48,5.24c-3.95-1.02-7.97,1.35-9,5.29Z"/></g></svg>

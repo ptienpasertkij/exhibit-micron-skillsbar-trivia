@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 94.77 131.26">
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88.83 65.7">
   <defs>
     <style>
       .cls-1 {
         fill: #fff;
-        font-family: Poppins-Bold, Poppins;
-        font-size: 90px;
-        font-weight: 700;
       }
     </style>
   </defs>
   <g id="Options">
-    <text class="cls-1" transform="translate(0 76.72)"><tspan x="0" y="0">14</tspan></text>
+    <g>
+      <path class="cls-1" d="m0,14.31V0h24.93v65.7H8.91V14.31H0Z"/>
+      <path class="cls-1" d="m35.82,54v-12.42L64.26.9h17.19v39.78h7.38v13.32h-7.38v11.7h-15.39v-11.7h-30.24Zm31.32-36.18l-15.12,22.86h15.12v-22.86Z"/>
+    </g>
   </g>
 </svg>
