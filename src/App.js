@@ -10,13 +10,16 @@ const App = () => {
   const [questionSet, setQuestionSet] = useState(questions);
 
   const getNextQuestion = () => {
-    if (questionSet.length === 0) {
-      setQuestionSet(questions);
-    }
-    const randomIndex = Math.floor(Math.random() * questionSet.length);
-    let nextQuestion = questionSet[randomIndex];
-    setQuestionSet(questionSet.filter((question) => question !== nextQuestion));
-    setCurrentQuestion(nextQuestion);
+    setQuestionSet(prevQuestionSet => {
+      if (prevQuestionSet.length === 0) {
+        return questions;
+      }
+      const randomIndex = Math.floor(Math.random() * prevQuestionSet.length);
+      const nextQuestion = prevQuestionSet[randomIndex];
+      const newQuestionSet = prevQuestionSet.filter(question => question !== nextQuestion);
+      setCurrentQuestion(nextQuestion);
+      return newQuestionSet;
+    })
   };
 
   const handleAnswer = (answer) => {
@@ -33,7 +36,6 @@ const App = () => {
   return (
     <>
       {currentQuestion && <Question question={currentQuestion} handleAnswer={handleAnswer} />}
-      {score}
     </>
   );
 };
