@@ -25,6 +25,7 @@ const Question = ({ question, handleAnswer }) => {
         justifyContent: "flex-start",
         alignItems: "center",
         height: "100vh",
+        width: "100%"
       }}
     >
       <Box
