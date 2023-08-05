@@ -29,7 +29,7 @@ const App = () => {
       const scoreRef = doc(db, "score", "current_score");
       try {
         await setDoc(scoreRef, {
-          [team]: score + 1
+          [team]: score + 2
         }, { merge: true })
       } catch(err) {
         console.log("Could not update score in Firestore");
@@ -40,7 +40,7 @@ const App = () => {
     if (answer.correct) {
       // update score in firestore
       updateScoreFirestore();
-      setScore(score + 1);
+      setScore(score + 2);
     }
 
     getNextQuestion();
