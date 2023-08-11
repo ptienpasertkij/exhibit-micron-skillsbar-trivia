@@ -10,11 +10,14 @@ const Question = ({ question, handleAnswer }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
+    if(!selectedAnswer) {
+      setSelectedAnswer(answer);
 
-    setTimeout(() => {
-      handleAnswer(answer);
-    }, 1000);
+      setTimeout(() => {
+        handleAnswer(answer);
+        setSelectedAnswer(null);
+      }, 1000);
+    }  
   };
 
   return (
