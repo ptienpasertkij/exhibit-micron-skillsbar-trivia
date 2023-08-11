@@ -5,37 +5,61 @@ import Box from "@mui/material/Box";
 // import questions from util
 import { questions } from "./util/question.js";
 import TeamSelect from "./components/TeamSelect";
-import {db} from "./firebase";
+import { db } from "./firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const App = () => {
   const [team, setTeam] = useState(null);
+  const [questionsArray, setQuestionsArray] = useState([...questions]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [score, setScore] = useState(0);
 
-
   const getNextQuestion = () => {
-    if (questions.length === 0) {
-      questions = [...questions];
-    }
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    let nextQuestion = questions[randomIndex];
-    questions.splice(randomIndex, 1);
+    console.log(`Remaining questions: ${questionsArray.length}`);
+    console.log(questionsArray);
+
+    const randomIndex = Math.floor(Math.random() * questionsArray.length);
+    let nextQuestion = questionsArray[randomIndex];
+    // remove the question from the array and update the state
     setCurrentQuestion(nextQuestion);
+
+    // remove the question from the array and update the state, if questionsArray.length === 1, reset the questionsArray
+    setQuestionsArray((questionsArray) => {
+      if (questionsArray.length === 1) {
+        console.log("Resetting questions array");
+        return [...questions];
+      } else {
+        return questionsArray.filter((question) => question !== nextQuestion);
+      }
+    });
   };
 
   const handleAnswer = (answer) => {
     const updateScoreFirestore = async () => {
       const scoreRef = doc(db, "score", "current_score");
       try {
-        await setDoc(scoreRef, {
-          [team]: score + 2
-        }, { merge: true })
-      } catch(err) {
+        // First get current score from Firestore
+        const scoreSnap = await getDoc(scoreRef);
+        if (scoreSnap.exists()) {
+          console.log("Score data:", scoreSnap.data());
+          // Do stuff to score
+          await setDoc(
+            scoreRef,
+            {
+              [team]: scoreSnap.data()[team] + 2,
+              last_updated: new Date(),
+            },
+            { merge: true }
+          );
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      } catch (err) {
         console.log("Could not update score in Firestore");
         console.error(err);
       }
-    }
+    };
 
     if (answer.correct) {
       // update score in firestore
@@ -49,41 +73,12 @@ const App = () => {
   const handleSetTeam = (team) => {
     setTeam(team);
     localStorage.setItem("team", team);
-  }
+  };
 
   // update team from local storage
   useEffect(() => {
-    const getScoreFromFirestore = async () => {
-      const scoreRef = doc(db, "score", "current_score");
-      const scoreSnap = await getDoc(scoreRef);
-      if (scoreSnap.exists()) {
-        console.log("Document data:", scoreSnap.data());
-        setScore(scoreSnap.data()[team]);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }
-
     const team = localStorage.getItem("team") || null;
     setTeam(team);
-    
-    if(team) {
-      getScoreFromFirestore();
-    }
-
-    // Get the current score from Firestore
-    // db.collection("score").doc("current_score").get().then((doc) => {
-    //   if (doc.exists) {
-    //     setScore(doc.data()[team]);
-    //   } else {
-    //     // doc.data() will be undefined in this case
-    //     console.log("No such document!");
-    //   }
-    // }).catch((error) => {
-    //   console.error("Error getting document:", error);
-    // }
-    // );
   }, [team]);
 
   // Update the next question
@@ -92,16 +87,20 @@ const App = () => {
   }, []);
 
   return (
-    <Box sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      width: '100vw',
-    }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        width: "100vw",
+      }}
+    >
       {!team && <TeamSelect setTeam={handleSetTeam} />}
-      {team && currentQuestion && <Question question={currentQuestion} handleAnswer={handleAnswer} />}
+      {team && currentQuestion && (
+        <Question question={currentQuestion} handleAnswer={handleAnswer} />
+      )}
     </Box>
   );
 };

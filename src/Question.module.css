@@ -1,7 +1,6 @@
 .answer {
   max-height: 100px;
-  max-width: 680px;
-  flex-grow: 1;
+  max-width: 100%;
   /* for small screens make max-height 50px */
 }
 

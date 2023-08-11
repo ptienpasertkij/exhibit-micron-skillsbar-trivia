@@ -80,19 +80,45 @@ const Answer = ({ answer, handleAnswer, index, selectedAnswer }) => {
             >{`+${isCorrect ? "2" : "0"} points`}</Typography>
           </>
         ) : (
-          <>
-            <Typography
-              fontWeight={600}
-              color={isSelected ? "white" : "#3bacab"}
+          <Box
+            sx={{
+              display: "flex",
+              flexFlow: "row nowrap",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Box>
+              <Typography
+                fontWeight={600}
+                color={isSelected ? "white" : "#3bacab"}
+                sx={{
+                  // marginRight: { xs: "25px", md: "30px" },
+                  fontSize: { xs: "2rem", md: "4rem", lg: "5rem" },
+                }}
+              >
+                {String.fromCharCode(65 + index)}
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                // marginRight: { xs: "25px", md: "30px" },
-                fontSize: { xs: "2rem", md: "4rem", lg: "5rem" },
+                flexGrow: 1,
+                marginLeft: "30px",
+
+                display: "flex",
+                flexFlow: "row nowrap",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {String.fromCharCode(65 + index)}
-            </Typography>
-            <img src={answer.img} alt={`Answer ${index + 1}`} className={styles.answer} />
-          </>
+              <img
+                src={answer.img}
+                alt={`Answer ${index + 1}`}
+                className={styles.answer}
+              />
+            </Box>
+          </Box>
         )}
       </Box>
     </Box>
