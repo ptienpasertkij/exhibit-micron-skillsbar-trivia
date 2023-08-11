@@ -12,7 +12,6 @@ const App = () => {
   const [team, setTeam] = useState(null);
   const [questionsArray, setQuestionsArray] = useState([...questions]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
-  const [score, setScore] = useState(0);
 
   const getNextQuestion = () => {
     console.log(`Remaining questions: ${questionsArray.length}`);
@@ -20,7 +19,6 @@ const App = () => {
 
     const randomIndex = Math.floor(Math.random() * questionsArray.length);
     let nextQuestion = questionsArray[randomIndex];
-    // remove the question from the array and update the state
     setCurrentQuestion(nextQuestion);
 
     // remove the question from the array and update the state, if questionsArray.length === 1, reset the questionsArray
@@ -64,7 +62,6 @@ const App = () => {
     if (answer.correct) {
       // update score in firestore
       updateScoreFirestore();
-      setScore(score + 2);
     }
 
     getNextQuestion();
@@ -74,6 +71,37 @@ const App = () => {
     setTeam(team);
     localStorage.setItem("team", team);
   };
+
+  // useEffect to reset the score at midnight
+  useEffect(() => {
+    const resetScore = async () => {
+      const scoreRef = doc(db, "score", "current_score");
+      try {
+        // Set scores on both teams to 0
+        await setDoc(
+          scoreRef,
+          {
+            blue_team: 0,
+            red_team: 0,
+            last_updated: new Date(),
+          },
+          { merge: true }
+        );
+      } catch (err) {
+        console.log("Could not reset score in Firestore");
+        console.error(err);
+      }
+    };
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const hours = now.getHours();
+      if (hours === 0) {
+        resetScore();
+      }
+    }, 1000 * 60 * 60);
+    return () => clearInterval(interval);
+  }, []);
 
   // update team from local storage
   useEffect(() => {
