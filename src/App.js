@@ -6,31 +6,41 @@ import Box from "@mui/material/Box";
 import TeamSelect from "components/TeamSelect";
 import "util/preloadImages.js";
 import { questions } from "util/question.js";
-import { updateScoreFirestore, useResetScoreAtMidnight } from "util/util.js";
+import {
+  getFromLocalStorage,
+  getRandomQuestion,
+  saveToLocalStorage,
+  updateScoreFirestore,
+  useResetScoreAtMidnight
+} from "util/util.js";
 
 const App = () => {
-  const [team, setTeam] = useState(null);
+  const [team, setTeam] = useState(getFromLocalStorage("team", null));
   const [questionsArray, setQuestionsArray] = useState([...questions]);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState(
+    getRandomQuestion(questionsArray)
+  );
 
   const getNextQuestion = () => {
-    console.log(`Remaining questions: ${questionsArray.length}`);
-    console.log(questionsArray);
+    setQuestionsArray((prevQuestionsArray) => {
+      let nextQuestionsArray;
 
-    const randomIndex = Math.floor(Math.random() * questionsArray.length);
-    let nextQuestion = questionsArray[randomIndex];
-    setCurrentQuestion(nextQuestion);
-
-    // remove the question from the array and update the state, if questionsArray.length === 1, reset the questionsArray
-    setQuestionsArray((questionsArray) => {
-      if (questionsArray.length === 1) {
-        console.log("Resetting questions array");
-        return [...questions];
+      // When only one question is left in the array
+      if (prevQuestionsArray.length === 1) {
+        setCurrentQuestion(getRandomQuestion(questions)); // Set a random question from the original list
+        nextQuestionsArray = [...questions]; // Reset the questionsArray
       } else {
-        return questionsArray.filter((question) => question !== nextQuestion);
+        const nextQuestion = getRandomQuestion(prevQuestionsArray);
+        setCurrentQuestion(nextQuestion);
+        nextQuestionsArray = prevQuestionsArray.filter(
+          (question) => question !== nextQuestion
+        );
       }
+
+      return nextQuestionsArray;
     });
   };
+
   const handleAnswer = (answer) => {
     if (answer.correct) {
       // update score in firestore
@@ -45,14 +55,9 @@ const App = () => {
     setTeam(team);
   }, [team]);
 
-  // Update the next question
-  useEffect(() => {
-    getNextQuestion();
-  }, []);
-
   const handleSetTeam = (team) => {
     setTeam(team);
-    localStorage.setItem("team", team);
+    saveToLocalStorage("team", team);
   };
 
   useResetScoreAtMidnight(); // useEffect to reset the score at midnight

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "firebase.js";
 
 export const useResetScoreAtMidnight = () => {
   useEffect(() => {
@@ -38,9 +38,8 @@ export const updateScoreFirestore = async (team) => {
   const scoreRef = doc(db, "score", "current_score");
   try {
     // First get current score from Firestore
-    const scoreSnap = await scoreRef.get();
+    const scoreSnap = await getDoc(scoreRef);
     if (scoreSnap.exists()) {
-      console.log("Score data:", scoreSnap.data());
       // Do stuff to score
       await setDoc(
         scoreRef,
@@ -60,7 +59,25 @@ export const updateScoreFirestore = async (team) => {
   }
 };
 
-export const handleSetTeam = (setTeam, team) => {
-  setTeam(team);
-  localStorage.setItem("team", team);
+export const saveToLocalStorage = (key, value) => {
+  localStorage.setItem(key, value);
+};
+
+export const getFromLocalStorage = (key, defaultValue) => {
+  return localStorage.getItem(key) || defaultValue;
+};
+
+export const removeFromLocalStorage = (key) => {
+  localStorage.removeItem(key);
+};
+
+/**
+ * Returns a random question from the given array of questions.
+ *
+ * @param {Array} questionsArray - The array of questions to choose from.
+ * @returns {Object} - A randomly selected question from the array.
+ */
+export const getRandomQuestion = (questionsArray) => {
+  const randomIndex = Math.floor(Math.random() * questionsArray.length);
+  return questionsArray[randomIndex];
 };
