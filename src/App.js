@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Question from "./components/Question";
 import Box from "@mui/material/Box";
 
 // import questions from util
 import TeamSelect from "components/TeamSelect";
+import "util/preloadImages.js";
 import { questions } from "util/question.js";
 import { updateScoreFirestore, useResetScoreAtMidnight } from "util/util.js";
 
@@ -12,7 +13,7 @@ const App = () => {
   const [questionsArray, setQuestionsArray] = useState([...questions]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
-  const getNextQuestion = useCallback(() => {
+  const getNextQuestion = () => {
     console.log(`Remaining questions: ${questionsArray.length}`);
     console.log(questionsArray);
 
@@ -29,8 +30,7 @@ const App = () => {
         return questionsArray.filter((question) => question !== nextQuestion);
       }
     });
-  }, []);
-
+  };
   const handleAnswer = (answer) => {
     if (answer.correct) {
       // update score in firestore
@@ -38,13 +38,6 @@ const App = () => {
     }
     getNextQuestion();
   };
-
-  const handleSetTeam = (team) => {
-    setTeam(team);
-    localStorage.setItem("team", team);
-  };
-
-  useResetScoreAtMidnight(); // useEffect to reset the score at midnight
 
   // update team from local storage
   useEffect(() => {
@@ -55,7 +48,14 @@ const App = () => {
   // Update the next question
   useEffect(() => {
     getNextQuestion();
-  }, [getNextQuestion]);
+  }, []);
+
+  const handleSetTeam = (team) => {
+    setTeam(team);
+    localStorage.setItem("team", team);
+  };
+
+  useResetScoreAtMidnight(); // useEffect to reset the score at midnight
 
   return (
     <Box
