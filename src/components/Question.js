@@ -16,7 +16,7 @@ const Question = ({ question, handleAnswer }) => {
       setTimeout(() => {
         handleAnswer(answer);
         setSelectedAnswer(null);
-      }, 50);
+      }, 1000);
     }  
   };
 
