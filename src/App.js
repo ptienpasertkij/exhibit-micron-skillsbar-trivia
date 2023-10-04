@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Question from "./components/Question";
 import Box from "@mui/material/Box";
 
 // import questions from util
-import { questions } from "./util/question.js";
-import TeamSelect from "./components/TeamSelect";
-import { db } from "./firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import TeamSelect from "components/TeamSelect";
+import { questions } from "util/question.js";
+import { updateScoreFirestore, useResetScoreAtMidnight } from "util/util.js";
 
 const App = () => {
   const [team, setTeam] = useState(null);
   const [questionsArray, setQuestionsArray] = useState([...questions]);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
-  const getNextQuestion = () => {
+  const getNextQuestion = useCallback(() => {
     console.log(`Remaining questions: ${questionsArray.length}`);
     console.log(questionsArray);
 
@@ -30,40 +29,13 @@ const App = () => {
         return questionsArray.filter((question) => question !== nextQuestion);
       }
     });
-  };
+  }, []);
 
   const handleAnswer = (answer) => {
-    const updateScoreFirestore = async () => {
-      const scoreRef = doc(db, "score", "current_score");
-      try {
-        // First get current score from Firestore
-        const scoreSnap = await getDoc(scoreRef);
-        if (scoreSnap.exists()) {
-          console.log("Score data:", scoreSnap.data());
-          // Do stuff to score
-          await setDoc(
-            scoreRef,
-            {
-              [team]: scoreSnap.data()[team] + 2,
-              last_updated: new Date(),
-            },
-            { merge: true }
-          );
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      } catch (err) {
-        console.log("Could not update score in Firestore");
-        console.error(err);
-      }
-    };
-
     if (answer.correct) {
       // update score in firestore
-      updateScoreFirestore();
+      updateScoreFirestore(team);
     }
-
     getNextQuestion();
   };
 
@@ -72,36 +44,7 @@ const App = () => {
     localStorage.setItem("team", team);
   };
 
-  // useEffect to reset the score at midnight
-  useEffect(() => {
-    const resetScore = async () => {
-      const scoreRef = doc(db, "score", "current_score");
-      try {
-        // Set scores on both teams to 0
-        await setDoc(
-          scoreRef,
-          {
-            blue_team: 0,
-            red_team: 0,
-            last_updated: new Date(),
-          },
-          { merge: true }
-        );
-      } catch (err) {
-        console.log("Could not reset score in Firestore");
-        console.error(err);
-      }
-    };
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const hours = now.getHours();
-      if (hours === 0) {
-        resetScore();
-      }
-    }, 1000 * 60 * 60);
-    return () => clearInterval(interval);
-  }, []);
+  useResetScoreAtMidnight(); // useEffect to reset the score at midnight
 
   // update team from local storage
   useEffect(() => {
@@ -112,7 +55,7 @@ const App = () => {
   // Update the next question
   useEffect(() => {
     getNextQuestion();
-  }, []);
+  }, [getNextQuestion]);
 
   return (
     <Box
@@ -122,7 +65,7 @@ const App = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        width: "100vw",
+        width: "100vw"
       }}
     >
       {!team && <TeamSelect setTeam={handleSetTeam} />}
