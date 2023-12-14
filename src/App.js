@@ -22,7 +22,7 @@ const App = () => {
   const handleAnswer = (answer) => {
     if (answer.correct) {
       // update score on local server
-      socket.emit("updateScore", { team: team });
+      socket.emit("updateScore", { team: team, score: 2 });
     }
     setCurrentQuestion(getNextQuestion());
   };
