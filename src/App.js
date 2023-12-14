@@ -10,9 +10,9 @@ import {
   getFromLocalStorage,
   getRandomQuestion,
   saveToLocalStorage,
-  updateScoreFirestore,
-  useResetScoreAtMidnight
+  establishSocketConnection
 } from "util/util.js";
+import ConnectionErrorNotification from "components/ConnectionErrorNotification";
 
 const App = () => {
   const [team, setTeam] = useState(getFromLocalStorage("team", null));
@@ -20,6 +20,8 @@ const App = () => {
   const [currentQuestion, setCurrentQuestion] = useState(
     getRandomQuestion(questionsArray)
   );
+  const [socket, setSocket] = useState(null); // State to track socket connection
+  const [connectionError, setConnectionError] = useState(false); // State to track if there is a connection error
 
   const getNextQuestion = () => {
     setQuestionsArray((prevQuestionsArray) => {
@@ -43,8 +45,8 @@ const App = () => {
 
   const handleAnswer = (answer) => {
     if (answer.correct) {
-      // update score in firestore
-      updateScoreFirestore(team);
+      // update score on local server
+      socket.emit("updateScore", { team: team });
     }
     getNextQuestion();
   };
@@ -60,7 +62,16 @@ const App = () => {
     saveToLocalStorage("team", team);
   };
 
-  useResetScoreAtMidnight(); // useEffect to reset the score at midnight
+  // Establish socket connection
+  useEffect(() => {
+    const disconnectSocket = establishSocketConnection(
+      setConnectionError,
+      setSocket
+    );
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
 
   return (
     <Box
@@ -75,7 +86,10 @@ const App = () => {
     >
       {!team && <TeamSelect setTeam={handleSetTeam} />}
       {team && currentQuestion && (
-        <Question question={currentQuestion} handleAnswer={handleAnswer} />
+        <>
+          {connectionError && <ConnectionErrorNotification />}
+          <Question question={currentQuestion} handleAnswer={handleAnswer} />
+        </>
       )}
     </Box>
   );

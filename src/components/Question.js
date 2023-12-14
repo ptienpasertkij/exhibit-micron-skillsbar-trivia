@@ -10,14 +10,14 @@ const Question = ({ question, handleAnswer }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const handleAnswerClick = (answer) => {
-    if(!selectedAnswer) {
+    if (!selectedAnswer) {
       setSelectedAnswer(answer);
 
       setTimeout(() => {
         handleAnswer(answer);
         setSelectedAnswer(null);
       }, 1000);
-    }  
+    }
   };
 
   return (
@@ -27,7 +27,7 @@ const Question = ({ question, handleAnswer }) => {
         flexDirection: "column",
         justifyContent: "flex-start",
         alignItems: "center",
-        height: "100vh",
+        height: "calc(100vh - 50px)",
         width: "100%"
       }}
     >
@@ -43,7 +43,7 @@ const Question = ({ question, handleAnswer }) => {
           display: "flex",
           flexFlow: "row wrap",
           justifyContent: "space-between",
-          gap: { xs: "40px", lg: "30px" },
+          gap: { xs: "40px", lg: "30px" }
         }}
       >
         {/* map the answers */}
@@ -65,7 +65,7 @@ const Question = ({ question, handleAnswer }) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          height: { xs: "100px", md: "130px" },
+          height: { xs: "100px", md: "130px" }
         }}
       >
         <Typography
@@ -73,7 +73,7 @@ const Question = ({ question, handleAnswer }) => {
           fontSize={"2rem"}
           textAlign={"center"}
           sx={{
-            fontSize: { xs: "1.25rem", md: "2rem" },
+            fontSize: { xs: "1.25rem", md: "2rem" }
           }}
         >
           {question.category}
@@ -85,7 +85,7 @@ const Question = ({ question, handleAnswer }) => {
 
 Question.propTypes = {
   question: PropTypes.object.isRequired,
-  handleAnswer: PropTypes.func.isRequired,
+  handleAnswer: PropTypes.func.isRequired
 };
 
 export default Question;
