@@ -1,5 +1,5 @@
 import socketIO from "socket.io-client";
-const SERVER = "http://192.168.20.14:5000";
+const SERVER = "http://192.168.10.21:5000";
 
 export const establishSocketConnection = (setConnectionError, setSocket) => {
   const socket = socketIO(SERVER, {
