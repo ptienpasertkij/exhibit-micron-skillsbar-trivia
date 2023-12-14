@@ -1,29 +1,6 @@
 import socketIO from "socket.io-client";
 const SERVER = "http://192.168.20.14:5000";
 
-export const saveToLocalStorage = (key, value) => {
-  localStorage.setItem(key, value);
-};
-
-export const getFromLocalStorage = (key, defaultValue) => {
-  return localStorage.getItem(key) || defaultValue;
-};
-
-export const removeFromLocalStorage = (key) => {
-  localStorage.removeItem(key);
-};
-
-/**
- * Returns a random question from the given array of questions.
- *
- * @param {Array} questionsArray - The array of questions to choose from.
- * @returns {Object} - A randomly selected question from the array.
- */
-export const getRandomQuestion = (questionsArray) => {
-  const randomIndex = Math.floor(Math.random() * questionsArray.length);
-  return questionsArray[randomIndex];
-};
-
 export const establishSocketConnection = (setConnectionError, setSocket) => {
   const socket = socketIO(SERVER, {
     reconnection: true,
@@ -66,4 +43,16 @@ export const establishSocketConnection = (setConnectionError, setSocket) => {
   };
 
   return disconnectSocket;
+};
+
+export const saveToLocalStorage = (key, value) => {
+  localStorage.setItem(key, value);
+};
+
+export const getFromLocalStorage = (key, defaultValue) => {
+  return localStorage.getItem(key) || defaultValue;
+};
+
+export const removeFromLocalStorage = (key) => {
+  localStorage.removeItem(key);
 };
