@@ -302,4 +302,4 @@ const getNextQuestion = () => {
   return selectedQuestion;
 };
 
-export { getNextQuestion };
+export { getNextQuestion, questions };
